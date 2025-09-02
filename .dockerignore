@@ -1,0 +1,17 @@
+vendor
+node_modules
+storage/logs
+storage/framework/cache
+storage/framework/sessions
+storage/framework/views
+.git
+.gitignore
+.env
+*.sqlite
+docker-compose.override.yml
+Dockerfile*
+README.md
+tests
+*.md
+
+

@@ -1,0 +1,46 @@
+version: "3.9"
+
+services:
+  app:
+    build: .
+    container_name: laravel_app
+    ports:
+      - "8080:80"
+    environment:
+      APP_ENV: local
+      APP_DEBUG: "true"
+      APP_URL: http://localhost:8080
+      DB_CONNECTION: mysql
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_DATABASE: laravel
+      DB_USERNAME: laravel
+      DB_PASSWORD: secret
+      RUN_MIGRATIONS: "true"
+    volumes:
+      - ./:/var/www/html
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    container_name: laravel_db
+    ports:
+      - "33060:3306"
+    environment:
+      MYSQL_DATABASE: laravel
+      MYSQL_USER: laravel
+      MYSQL_PASSWORD: secret
+      MYSQL_ROOT_PASSWORD: rootsecret
+    volumes:
+      - db_data:/var/lib/mysql
+    command: ["--default-authentication-plugin=mysql_native_password", "--sql_mode=STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION"]
+
+volumes:
+  db_data:
+
+networks:
+  default:
+    name: laravel_net
+
+
